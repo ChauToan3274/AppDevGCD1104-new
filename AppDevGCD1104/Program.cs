@@ -1,7 +1,18 @@
+using AppDevGCD1104.Data;
+using AppDevGCD1104.Repository;
+using AppDevGCD1104.Repository.IRepository;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ApplicationDBContext>
+    (options => options.UseSqlServer
+    (builder.Configuration.GetConnectionString("MyConnection")));
+//builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+//builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
